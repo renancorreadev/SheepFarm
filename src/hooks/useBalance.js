@@ -15,7 +15,7 @@ const farmAddress = '0x594F955070554fEfA4637BBa8A0C687BD7Fd1dFE'
 export const useSheepBalance = (address, decimals = '9') => {
   const contract = useUSDT(sheepAddress, DAPP_TOKEN_ABI.abi)
   const [balance, setBalance] = useState(undefined)
-  const [sheepBalance, setUsdBalance] = useState(undefined)
+  const [sheepBalance, setSheepBalance] = useState(undefined)
   const { fastRefresh } = useRefresh()
   const { account } = useWeb3()
 
@@ -24,7 +24,12 @@ export const useSheepBalance = (address, decimals = '9') => {
       contract.options.address = sheepAddress
       const bal = await contract.methods.balanceOf(account).call()
       setBalance(new BigNumber(bal))
-      setUsdBalance(toLower(bal, decimals).toNumber())
+      const val = toLower(bal, decimals).toNumber()
+
+      const value = val.toFixed(0)
+      let dollarUSLocale = Intl.NumberFormat('en-US')
+      const amount = dollarUSLocale.format(value)
+      setSheepBalance(amount)
     }
     if (contract) {
       fetch()
@@ -47,7 +52,11 @@ export const useUSDTbalance = (address, decimals = '18') => {
       contract.options.address = usdtAddress
       const bal = await contract.methods.balanceOf(account).call()
       setBalance(new BigNumber(bal))
-      setUsdBalance(toLower(bal, decimals).toNumber())
+      const val = toLower(bal, decimals).toNumber()
+      const value = val.toFixed(0)
+      let dollarUSLocale = Intl.NumberFormat('en-US')
+      const amount = dollarUSLocale.format(value)
+      setUsdBalance(amount)
     }
     if (contract) {
       fetch()
@@ -72,7 +81,11 @@ export const useStakeBalance = (address, decimals = '9') => {
       contract.options.address = farmAddress
       const bal = await contract.methods.stakingBalance(account).call()
       setBalance(new BigNumber(bal))
-      setStakeBalance(toLower(bal, decimals).toNumber())
+      const val = toLower(bal, decimals).toNumber()
+      const value = val.toFixed(0)
+      let dollarUSLocale = Intl.NumberFormat('en-US')
+      const amount = dollarUSLocale.format(value)
+      setStakeBalance(amount)
     }
     if (contract) {
       fetch()

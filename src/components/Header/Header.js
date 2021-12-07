@@ -24,7 +24,7 @@ const Header = () => {
           <Nav.Link href="#stake_now">Stake Now</Nav.Link>
         </Nav>
         <Nav>
-          <Nav.Link href="/">
+          <Nav.Link href="#">
             <button
               className="btn btn-outline-warning"
               onClick={() => (connected ? deactivate() : setOpen(true))}

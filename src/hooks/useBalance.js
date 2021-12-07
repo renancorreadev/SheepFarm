@@ -21,7 +21,7 @@ export const useSheepBalance = (address, decimals = '9') => {
 
   useEffect(() => {
     const fetch = async () => {
-      contract.options.address = usdtAddress
+      contract.options.address = sheepAddress
       const bal = await contract.methods.balanceOf(account).call()
       setBalance(new BigNumber(bal))
       setUsdBalance(toLower(bal, decimals).toNumber())

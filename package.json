@@ -1,6 +1,7 @@
 {
   "name": "sheepstake",
   "homepage": "https://skyxcripto.github.io/farmapp/",
+  "license": "MIT",
   "version": "0.0.27",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",

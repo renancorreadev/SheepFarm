@@ -11,13 +11,15 @@ import Works from '../../components/HowWorks/index'
 import MainCarousel from '../../components/MainCarousel/index'
 import StakeNow from '../../components/StakeNow/index'
 import FormClaim from '../Forms/FormClaim'
+import FormUnstake from '..//Forms/FormUnstake'
 import {
   useEagerConnect,
   useWeb3,
   useUSDTbalance,
   useStakeBalance,
   useSheepBalance,
-  useLockRewards,
+  useStakeToRewards,
+  useDateRewards,
 } from '../../main/index'
 import BoxPage from '../BoxPage/BoxPage'
 import BoxPageEnd from '../BoxPage/BoxPageEnd'
@@ -29,7 +31,8 @@ const Main = () => {
   const { usdBalance } = useUSDTbalance(account)
   const { stakeBalance } = useStakeBalance(account)
   const { sheepBalance } = useSheepBalance(account)
-  const { lock } = useLockRewards()
+  const { _rewards } = useStakeToRewards(account)
+  const { date } = useDateRewards(account)
 
   return (
     <>
@@ -111,21 +114,62 @@ const Main = () => {
                     <div className="formStake col-md-12 d-flex justify-content-center">
                       <FormStake />
                     </div>
+                    <div className="row">
+                      <div className="col-md-12 d-flex justify-content-center">
+                        <FormUnstake />
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="claimBox col-md-6 box2">
                   <h2 className="AmountSheep">
                     <img src={rewardpng} alt="UsdBalance" className="UsdDawm" />
-                    Rewards is:{' '}
-                    {lock ? (
-                      <span style={{ marginLeft: '10px' }}>Locked</span>
-                    ) : (
-                      <span style={{ marginLeft: '10px' }}>Un-Lock</span>
-                    )}
+                    Rewards to Claim: {_rewards}
                   </h2>
                   <div className="row">
                     <div className="col-md-12 d-flex justify-content-center">
                       <FormClaim />
+                    </div>
+                  </div>
+                  <div
+                    className="row"
+                    style={{
+                      backgroundColor: 'white',
+                      padding: '15px',
+                      borderRadius: '20px',
+                      marginTop: '20px',
+                    }}
+                  >
+                    <div
+                      className="col-md-6 d-flex justify-content-end"
+                      style={{ marginBottom: '20px' }}
+                    >
+                      <h3 style={{ position: 'relative', top: '20px' }}>
+                        Next Date to claim:{' '}
+                      </h3>
+                    </div>
+                    <div
+                      className="col-md-6 d-flex justify-content-start"
+                      style={{ marginBottom: '10px' }}
+                    >
+                      <h4
+                        style={{
+                          position: 'relative',
+                          top: '15px',
+                          backgroundColor: '#078f5b',
+                          padding: '10px',
+                          borderRadius: '20px',
+                        }}
+                      >
+                        {date > 0 ? (
+                          date
+                        ) : (
+                          <h6 style={{ color: 'white' }}>
+                            {/* you still haven't made a claim */}
+                            {date}
+                          </h6>
+                        )}
+                      </h4>
                     </div>
                   </div>
                 </div>

@@ -9,7 +9,7 @@ import CoinToken from '../assets/abis/DappToken.json'
 
 export const ZERO_BALANCE = new BigNumber(0)
 const sheepAddress = '0x0025B42bfc22CbbA6c02d23d4Ec2aBFcf6E014d4'
-const farmAddress = '0x594F955070554fEfA4637BBa8A0C687BD7Fd1dFE'
+const farmAddress = '0x3260DCeB1886E123C17444Eab8ACE44B96eCbf2B'
 
 export const useERC20Approval = (requiredApprovedBalance) => {
   const contractCoinToken = useToken(sheepAddress, CoinToken.abi)
@@ -70,21 +70,13 @@ export const useERC20Approval = (requiredApprovedBalance) => {
 
   const unstake = async () => {
     try {
-      setApproveState(STATE.BUSY)
-
       ContractFarm.options.address = farmAddress
-
       await ContractFarm.methods
         .unstakeTokens()
         .send({ from: account })
         .on('transactionHash', (hash) => {})
-
-      await fetchApprovedBalance()
-
-      setApproveState(STATE.SUCCEED)
     } catch (e) {
       console.log(e)
-      setApproveState(STATE.FAILED)
     }
   }
 

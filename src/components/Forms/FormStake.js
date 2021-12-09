@@ -36,17 +36,6 @@ const FormStake = () => {
           </button>
         </div>
       </div>
-
-      <div className="boxstake row">
-        <div className="unstake col-md-12">
-          <button
-            className="btn btn-primary btn-block btn-lg"
-            variant="outlined"
-          >
-            UnStake
-          </button>
-        </div>
-      </div>
     </form>
   )
 }

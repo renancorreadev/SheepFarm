@@ -115,29 +115,3 @@ export const useLockRewards = (address, decimals = '9') => {
 
   return { lock }
 }
-
-export const useClaim = (address, decimals = '9') => {
-  const contract = useSheepStake(farmAddress, DAPP_TOKEN_ABI.abi)
-  const contractBUSD = useUSDT(usdtAddress, DAITOKEN_ABI.abi)
-  const { stakeBalance } = useStakeBalance()
-  const { account } = useWeb3()
-
-  const claimNow = async () => {
-    contract.options.address = farmAddress
-    //Calculate the amount of tokens to claim
-    // const percentual = await contract.methods.percentualRewards().call()
-    // const rewardsDividend = await contract.methods.rewardsDividend().call()
-    const amount = ((stakeBalance / 100) * 25) / 10000
-    //Claim the tokens
-    const amountBG = new BigNumber(amount)
-    contractBUSD.options.address = usdtAddress
-    try {
-      await contractBUSD.methods
-        .transferFrom(farmAddress, account, amountBG)
-        .send()
-    } catch (e) {
-      console.log(e)
-    }
-  }
-  return { claimNow }
-}

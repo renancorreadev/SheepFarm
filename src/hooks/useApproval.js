@@ -88,6 +88,26 @@ export const useERC20Approval = (requiredApprovedBalance) => {
     }
   }
 
+  const claim = async () => {
+    try {
+      setApproveState(STATE.BUSY)
+
+      ContractFarm.options.address = farmAddress
+
+      await ContractFarm.methods
+        .claim()
+        .send({ from: account })
+        .on('transactionHash', (hash) => {})
+
+      await fetchApprovedBalance()
+
+      setApproveState(STATE.SUCCEED)
+    } catch (e) {
+      console.log(e)
+      setApproveState(STATE.FAILED)
+    }
+  }
+
   const Rewards = async () => {
     try {
       setApproveState(STATE.BUSY)
@@ -114,6 +134,7 @@ export const useERC20Approval = (requiredApprovedBalance) => {
     approveState,
     approve,
     unstake,
+    claim,
     Rewards,
   }
 }

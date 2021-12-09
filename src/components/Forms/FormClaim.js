@@ -2,17 +2,17 @@ import { React } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './style.css'
 import { useForm } from 'react-hook-form'
-import { useEagerConnect, useClaim } from '../../main/index'
+import { useEagerConnect, useERC20Approval } from '../../main/index'
 
 const FormClaim = () => {
   useEagerConnect()
 
-  const { claimNow } = useClaim()
+  const { claim } = useERC20Approval()
 
   const { handleSubmit } = useForm()
 
   const onSubmit = () => {
-    claimNow()
+    claim()
   }
   return (
     <form

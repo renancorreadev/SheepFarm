@@ -161,13 +161,12 @@ const Main = () => {
                           borderRadius: '20px',
                         }}
                       >
-                        {date > 0 ? (
-                          date
+                        {date === '12/31/1969' ? (
+                          <span style={{ color: 'white', fontSize: '20px' }}>
+                            you didn't make a claim
+                          </span>
                         ) : (
-                          <h6 style={{ color: 'white' }}>
-                            {/* you still haven't made a claim */}
-                            {date}
-                          </h6>
+                          <span style={{ color: 'white' }}>{date}</span>
                         )}
                       </h4>
                     </div>

@@ -33,7 +33,12 @@ export default function BoxPageEnd() {
               }}
             >
               <button className="btn btn-primary">
-                <a href="https://pancakeswap.finance/swap">Buy Now </a>
+                <a
+                  href="https://pancakeswap.finance/swap"
+                  style={{ color: 'white', textDecoration: 'none' }}
+                >
+                  Buy Now{' '}
+                </a>
               </button>
             </div>
             <div

@@ -100,8 +100,6 @@ export const useStakeToRewards = (address, decimals = '18') => {
   const contract = useSheepStake(farmAddress, TOKENFARM_ABI.abi)
   //States Variables
   const [_stakingBalance, set_stakingBalance] = useState(undefined)
-  const [_percentualRewards, set_percentualRewards] = useState(undefined)
-  const [_rewardsDividend, set_rewardsDividend] = useState(undefined)
   //return value
   const [_rewards, set_rewards] = useState(undefined)
   const { fastRefresh } = useRefresh()
@@ -113,34 +111,17 @@ export const useStakeToRewards = (address, decimals = '18') => {
       const stakingBalance = await contract.methods
         .stakingBalance(account)
         .call()
-      const percentualRewards = await contract.methods
-        .PercentualRewardsValue()
-        .call()
-      const rewardsDividend = await contract.methods
-        .rewardsDividendsValue()
-        .call()
-
       set_stakingBalance(new BigNumber(stakingBalance))
-      set_percentualRewards(new BigNumber(percentualRewards))
-      set_rewardsDividend(new BigNumber(rewardsDividend))
+      const percentualRewards = 25
+      const rewardsDividend = 10000000
 
       const blockchainStakingvalue = toLower(
-        stakingBalance,
-        decimals,
-      ).toNumber()
-      const blockchainPercentualRewards = toLower(
-        percentualRewards,
-        decimals,
-      ).toNumber()
-      const blockchainRewardsDividends = toLower(
-        rewardsDividend,
+        stakingBalance * 10 ** 9,
         decimals,
       ).toNumber()
 
       const valueToRewards =
-        (((blockchainStakingvalue * 10 ** 9) / 100) *
-          blockchainPercentualRewards) /
-        blockchainRewardsDividends
+        (blockchainStakingvalue / 100) * (percentualRewards / rewardsDividend)
       set_rewards(valueToRewards)
     }
     if (contract) {
@@ -149,7 +130,7 @@ export const useStakeToRewards = (address, decimals = '18') => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contract, fastRefresh])
 
-  return { _stakingBalance, _percentualRewards, _rewardsDividend, _rewards }
+  return { _stakingBalance, _rewards }
 }
 export const useLockRewards = (address, decimals = '9') => {
   const contract = useSheepStake(farmAddress, DAPP_TOKEN_ABI.abi)

@@ -33,6 +33,9 @@ const Main = () => {
   const { sheepBalance } = useSheepBalance(account)
   const { _rewards } = useStakeToRewards(account)
   const { date } = useDateRewards(account)
+  var data = new Date()
+  const _dateTime = new Date(data)
+  var dateNow = _dateTime.toLocaleDateString('en-US').toString()
 
   return (
     <>
@@ -124,7 +127,7 @@ const Main = () => {
                 <div className="claimBox col-md-6 box2">
                   <h2 className="AmountSheep">
                     <img src={rewardpng} alt="UsdBalance" className="UsdDawm" />
-                    Rewards to Claim: {_rewards}
+                    Rewards to Claim: {_rewards} $
                   </h2>
                   <div className="row">
                     <div className="col-md-12 d-flex justify-content-center">
@@ -144,9 +147,9 @@ const Main = () => {
                       className="col-md-6 d-flex justify-content-end"
                       style={{ marginBottom: '20px' }}
                     >
-                      <h3 style={{ position: 'relative', top: '20px' }}>
-                        Next Date to claim:{' '}
-                      </h3>
+                      <h5 style={{ position: 'relative', top: '20px' }}>
+                        Last released date for claim:{' '}
+                      </h5>
                     </div>
                     <div
                       className="col-md-6 d-flex justify-content-start"
@@ -161,7 +164,7 @@ const Main = () => {
                           borderRadius: '20px',
                         }}
                       >
-                        {date === '12/31/1969' ? (
+                        {date === dateNow ? (
                           <span style={{ color: 'white', fontSize: '20px' }}>
                             you didn't make a claim
                           </span>
